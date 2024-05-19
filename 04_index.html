@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the number</title>
+    <style>
+        body {
+            background-color: #212121;
+            color: whitesmoke;
+        }
+
+        #container {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            height: 97vh;
+            justify-content: center;
+        }
+        
+        input {
+            font-size: 24px;
+            padding: 6px;
+            text-align: center;
+        }
+
+        button {
+            margin: 4%;
+            font-size: 24px;
+            padding: 6px;
+        }
+
+        #remark {
+            font-size: 36px;
+        }
+
+        #name {
+            color: rgb(190, 190, 190);
+        }
+
+        p {
+            font-size: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <h1>Guess the Number</h1>
+        <div>
+            <input type="text" id="input" placeholder="Entries from 0 to 100">
+            <button onclick="counter()">Submit</button>
+        </div>
+        <p>Your Guesses : <span id="guess">___</span></p>
+        <p id="result">Attempts Left : <span id="attempts">10</span></p>
+        <p id="remark"></p>
+        <p id="name">Created with ❤️ by Ayush Singh</p>
+    </div>
+    <script>
+        let number = Math.floor(Math.random() * 100) + 1;
+        let attempts = 10;
+        let attemptArray = [];
+        function counter() {
+            let inputValue = parseInt(document.getElementById("input").value);
+            if (inputValue >= 0 && inputValue <= 100 && attempts > 0) {
+                attempts--;
+                if (inputValue == number) {
+                    document.getElementById("result").innerText = "You Won";
+                    document.getElementById("result").style.fontSize = "36px";
+                    document.getElementById("remark").innerText = "";
+                    document.getElementById("attempts").innerText = attempts;
+                    attemptArray.push(inputValue);
+                    document.getElementById("guess").innerHTML = attemptArray.toString();
+                    return;
+                } else if (number > inputValue + 20) {
+                    document.getElementById("remark").innerText = "Very Very low";
+                } else if (number < inputValue - 20) {
+                    document.getElementById("remark").innerText = "Very Very high";
+                } else if (number > inputValue + 15) {
+                    document.getElementById("remark").innerText = "Too low";
+                } else if (number < inputValue - 15) {
+                    document.getElementById("remark").innerText = "Too high";
+                } else if (number > inputValue + 7) {
+                    document.getElementById("remark").innerText = "Low";
+                } else if (number < inputValue - 7) {
+                    document.getElementById("remark").innerText = "High";
+                } else if (number > inputValue - 3 && number < inputValue + 3) {
+                    document.getElementById("remark").innerText = "Close but not exact";
+                } else {
+                    document.getElementById("remark").innerText = "Try again";
+                }
+                document.getElementById("attempts").innerText = attempts;
+                attemptArray.push(inputValue);
+                document.getElementById("guess").innerHTML = attemptArray.toString();
+                if (attempts == 0) {
+                    document.getElementById("remark").innerText = `The number was : ${number}`;
+                }
+            } else {
+                document.getElementById("result").innerText = "Enter a valid value!";
+            }
+        }
+    </script>
+</body>
+
+</html>
